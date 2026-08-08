@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 
-/* =========================
-   ROOT VARIABLES
-========================= */
+
 
 :root {
     --bg: #03050d;
@@ -24,9 +22,7 @@
 }
 
 
-/* =========================
-   RESET
-========================= */
+
 
 * {
     box-sizing: border-box;
@@ -65,9 +61,7 @@ body {
 }
 
 
-/* =========================
-   FUTURISTIC GRID
-========================= */
+
 
 body::before {
     content: "";
@@ -101,9 +95,7 @@ body::before {
 }
 
 
-/* =========================
-   FLOATING GLOW
-========================= */
+
 
 body::after {
     content: "";
@@ -145,9 +137,7 @@ body::after {
 }
 
 
-/* =========================
-   HEADER
-========================= */
+
 
 .header {
     text-align: center;
@@ -161,7 +151,7 @@ body::after {
 }
 
 
-/* AI AGENT BADGE */
+
 
 .header::before {
     content: "✦  AI AGENT ACTIVE";
@@ -232,9 +222,6 @@ body::after {
         textShimmer 3s ease-in-out infinite alternate;
 }
 
-/*
-   DOCUMENT SYMBOL AFTER DOCASK
-*/
 
 .header h1::after {
     content: "";
