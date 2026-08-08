@@ -1,0 +1,1522 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+
+/* =========================
+   ROOT VARIABLES
+========================= */
+
+:root {
+    --bg: #03050d;
+    --bg2: #070b18;
+    --card: rgba(9, 14, 30, 0.82);
+    --card2: rgba(13, 19, 40, 0.75);
+
+    --text: #f5f7ff;
+    --muted: #8992ad;
+
+    --purple: #7c3cff;
+    --purple2: #a855f7;
+    --blue: #2878ff;
+    --cyan: #00d9ff;
+    --green: #00e6a7;
+
+    --border: rgba(113, 91, 255, 0.28);
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(124, 60, 255, 0.14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(0, 217, 255, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 55% 90%,
+            rgba(75, 35, 200, 0.10),
+            transparent 30%
+        ),
+        #03050d;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   FUTURISTIC GRID
+========================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(80, 100, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(80, 100, 255, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+
+    pointer-events: none;
+    z-index: -2;
+
+    animation: panGrid 60s linear infinite;
+}
+
+
+/* =========================
+   FLOATING GLOW
+========================= */
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    top: -220px;
+    right: -180px;
+
+    background: radial-gradient(
+        circle,
+        rgba(0, 217, 255, 0.12),
+        transparent 65%
+    );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+    z-index: -1;
+
+    animation: floatGlow 12s ease-in-out infinite;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+
+    padding: 70px 0 80px;
+
+    position: relative;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    text-align: center;
+    margin-bottom: 42px;
+
+    position: relative;
+
+    animation:
+        fadeInDownBounce 1s cubic-bezier(0.25, 1, 0.5, 1)
+        backwards;
+}
+
+
+/* AI AGENT BADGE */
+
+.header::before {
+    content: "✦  AI AGENT ACTIVE";
+
+    display: inline-flex;
+
+    padding: 8px 16px;
+    margin-bottom: 24px;
+
+    border-radius: 999px;
+
+    color: #a7ffd9;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+
+    background: rgba(0, 230, 167, 0.06);
+
+    border: 1px solid rgba(0, 230, 167, 0.22);
+
+    box-shadow:
+        0 0 18px rgba(0, 230, 167, 0.08);
+
+    animation:
+        badgePulse 2s ease-in-out infinite alternate;
+}
+
+
+/* MAIN TITLE */
+
+.header h1 {
+    margin: 0;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: clamp(58px, 8vw, 92px);
+
+    line-height: 0.95;
+
+    font-weight: 700;
+
+    letter-spacing: -5px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #ffffff 15%,
+            #9db7ff 40%,
+            #8b5cf6 65%,
+            #20d9ff 95%
+        );
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    filter:
+        drop-shadow(
+            0 0 25px rgba(124, 60, 255, 0.22)
+        );
+
+    animation:
+        gradientShift 6s linear infinite,
+        textShimmer 3s ease-in-out infinite alternate;
+}
+
+/*
+   DOCUMENT SYMBOL AFTER DOCASK
+*/
+
+.header h1::after {
+    content: "";
+
+    font-size: 34px;
+
+    color: #20d9ff;
+
+    vertical-align: top;
+
+    margin-left: 12px;
+
+    text-shadow:
+        0 0 12px #20d9ff,
+        0 0 25px #2878ff;
+
+    display: inline-block;
+
+    animation:
+        searchPulse 3s ease-in-out infinite;
+}
+
+
+/* SUBTITLE */
+
+.header p {
+    margin: 22px 0 0;
+
+    color: var(--muted);
+
+    font-size: 16px;
+
+    letter-spacing: 0.2px;
+}
+
+.header p::before {
+    content:
+        "I N T E L L I G E N T   K N O W L E D G E   A G E N T";
+
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #69cfff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.card {
+    position: relative;
+
+    padding: 32px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 17, 38, 0.94),
+            rgba(4, 8, 20, 0.90)
+        );
+
+    border: 1px solid rgba(108, 82, 255, 0.22);
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(24px);
+
+    overflow: hidden;
+
+    animation:
+        fadeInSlideUp 0.8s ease-out 0.2s backwards;
+
+    transition:
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.5s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px) scale(1.01);
+
+    box-shadow:
+        0 40px 120px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 45px rgba(124, 60, 255, 0.15);
+}
+
+
+/* CARD TOP GLOW */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -1px;
+    left: 12%;
+    right: 12%;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #7c3cff,
+            #00d9ff,
+            #7c3cff,
+            transparent
+        );
+
+    background-size: 200% auto;
+
+    box-shadow:
+        0 0 20px #7c3cff,
+        0 0 40px #2878ff;
+
+    opacity: 0.9;
+
+    animation:
+        gradientShift 4s linear infinite;
+}
+
+
+/* =========================
+   UPLOAD AREA
+========================= */
+
+.upload-area {
+    position: relative;
+
+    min-height: 330px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 50px 30px;
+
+    border-radius: 22px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(42, 33, 100, 0.20),
+            transparent 65%
+        ),
+        rgba(5, 10, 25, 0.72);
+
+    border: 1px dashed rgba(118, 92, 255, 0.65);
+
+    box-shadow:
+        inset 0 0 60px rgba(80, 50, 220, 0.05),
+        0 0 35px rgba(75, 45, 255, 0.05);
+
+    animation:
+        fadeInSlideUp 0.8s ease-out 0.4s backwards,
+        floatIdle 6s ease-in-out 1.2s infinite;
+
+    transition:
+        border-color 0.4s ease,
+        background 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.upload-area:hover {
+    border-color: rgba(0, 217, 255, 0.8);
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(42, 33, 100, 0.35),
+            transparent 65%
+        ),
+        rgba(5, 10, 25, 0.82);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        inset 0 0 80px rgba(0, 217, 255, 0.1),
+        0 0 40px rgba(0, 217, 255, 0.15);
+}
+
+
+/* UPLOAD CHILD ANIMATIONS */
+
+.upload-area > * {
+    animation:
+        innerSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)
+        backwards;
+}
+
+.upload-area > p:first-child {
+    animation-delay: 0.5s;
+}
+
+.upload-area > input {
+    animation-delay: 0.6s;
+}
+
+.upload-area > button {
+    animation-delay: 0.7s;
+}
+
+.upload-area > .status {
+    animation-delay: 0.8s;
+}
+
+
+/* CYAN EDGE */
+
+.upload-area::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 8px;
+
+    border-radius: 17px;
+
+    border: 1px solid rgba(0, 217, 255, 0.10);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        inset 0.4s ease;
+}
+
+.upload-area:hover::before {
+    inset: 4px;
+
+    opacity: 0.8;
+
+    border-color: rgba(0, 217, 255, 0.3);
+}
+
+
+/* DIGITAL WAVES */
+
+.upload-area::after {
+    content: "";
+
+    position: absolute;
+
+    width: 120%;
+    height: 100px;
+
+    bottom: -30px;
+    left: -10%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(0, 217, 255, 0.13),
+            transparent 65%
+        );
+
+    filter: blur(12px);
+
+    pointer-events: none;
+
+    animation:
+        waveBreathe 4s ease-in-out infinite alternate;
+}
+
+
+/* UPLOAD TEXT */
+
+.upload-area > p:first-child {
+    margin: 0 0 25px;
+
+    font-size: 18px;
+
+    color: #dfe5ff;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   FILE INPUT
+========================= */
+
+#pdfFile {
+    width: min(600px, 100%);
+
+    padding: 13px;
+
+    color: #9da8c5;
+
+    background: rgba(5, 8, 20, 0.8);
+
+    border: 1px solid rgba(100, 110, 150, 0.20);
+
+    border-radius: 13px;
+
+    font-size: 13px;
+
+    z-index: 2;
+
+    cursor: pointer;
+
+    transition:
+        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#pdfFile:hover {
+    border-color: rgba(124, 60, 255, 0.5);
+
+    background: rgba(10, 15, 35, 0.9);
+
+    box-shadow:
+        0 0 25px rgba(124, 60, 255, 0.15);
+
+    transform: scale(1.02);
+}
+
+
+/* FILE BUTTON */
+
+#pdfFile::file-selector-button {
+    margin-right: 15px;
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #252b4c,
+            #171d36
+        );
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#pdfFile:hover::file-selector-button {
+    background:
+        linear-gradient(
+            135deg,
+            #3e4785,
+            #222a4f
+        );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================
+   UPLOAD BUTTON
+========================= */
+
+.upload-area button {
+    margin-top: 22px;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   ALL BUTTONS
+========================= */
+
+button {
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    padding: 14px 28px;
+
+    border-radius: 12px;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.1px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #6d28d9,
+            #7c3cff 45%,
+            #008cff
+        );
+
+    background-size: 200% auto;
+
+    box-shadow:
+        0 8px 25px rgba(91, 44, 255, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.25s ease,
+        filter 0.25s ease,
+        background-position 0.4s ease;
+}
+
+button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 50%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation:
+        shineSweep 4.5s infinite cubic-bezier(0.19, 1, 0.22, 1);
+
+    pointer-events: none;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.02);
+
+    filter: brightness(1.15);
+
+    background-position: right center;
+
+    box-shadow:
+        0 15px 40px rgba(91, 44, 255, 0.55),
+        0 0 30px rgba(0, 217, 255, 0.25);
+}
+
+button:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    min-height: 18px;
+
+    margin-top: 16px !important;
+
+    color: #6ee7b7;
+
+    font-size: 12px;
+
+    animation:
+        terminalBlink 1.2s step-start infinite,
+        textGlow 2s ease-in-out infinite alternate;
+}
+
+
+/* =====================================================
+   QUESTION SECTION
+===================================================== */
+
+.question-box {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 22px;
+
+    padding: 7px;
+
+    border-radius: 15px;
+
+    background: rgba(8, 12, 28, 0.92);
+
+    border: 1px solid rgba(111, 91, 255, 0.22);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25);
+
+    animation:
+        fadeInSlideUp 0.8s ease-out 0.6s backwards;
+
+    transition:
+        all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* ACTIVE QUESTION BOX */
+
+.question-box:focus-within {
+    border-color: rgba(0, 217, 255, 0.6);
+
+    transform: translateY(-2px);
+
+    background: rgba(12, 18, 42, 0.95);
+
+    animation:
+        focusPulse 2s infinite alternate;
+}
+
+
+/* =====================================================
+   DISABLED QUESTION BOX
+===================================================== */
+
+/*
+   This state is active while the HTML input has:
+   disabled
+*/
+
+.question-box:has(#question:disabled) {
+    opacity: 0.55;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7, 10, 24, 0.75),
+            rgba(4, 7, 17, 0.75)
+        );
+
+    border-color: rgba(90, 95, 125, 0.16);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.015);
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    animation:
+        fadeInSlideUp 0.8s ease-out 0.6s backwards;
+}
+
+
+/* DISABLED QUESTION INPUT */
+
+#question:disabled {
+    color: #555d76;
+
+    background: transparent;
+
+    cursor: not-allowed;
+
+    opacity: 0.7;
+}
+
+#question:disabled::placeholder {
+    color: #4d556d;
+}
+
+
+/* DISABLED ASK BUTTON */
+
+#askButton:disabled {
+    color: #656d86;
+
+    background:
+        linear-gradient(
+            135deg,
+            #171b2d,
+            #101422
+        );
+
+    border: 1px solid rgba(100, 110, 150, 0.12);
+
+    box-shadow:
+        none;
+
+    cursor: not-allowed;
+
+    opacity: 0.55;
+
+    transform: none;
+
+    filter: grayscale(0.35);
+
+    pointer-events: none;
+}
+
+
+/* REMOVE SHINE FROM DISABLED BUTTON */
+
+#askButton:disabled::before {
+    display: none;
+}
+
+
+/* =====================================================
+   QUESTION INPUT
+===================================================== */
+
+#question {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 15px 18px;
+
+    color: white;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition:
+        color 0.3s ease;
+}
+
+#question::placeholder {
+    color: #69738f;
+
+    transition:
+        color 0.3s ease;
+}
+
+#question:focus::placeholder {
+    color: #4a5472;
+}
+
+
+/* ASK BUTTON */
+
+#askButton {
+    min-width: 110px;
+}
+
+
+/* =====================================================
+   ANSWER SECTION
+===================================================== */
+
+.answer-section {
+    margin-top: 25px;
+
+    padding: 24px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 20, 42, 0.88),
+            rgba(6, 10, 24, 0.88)
+        );
+
+    border: 1px solid rgba(102, 85, 255, 0.20);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    animation:
+        fadeInSlideUp 0.8s ease-out 0.8s backwards;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.answer-section:hover {
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+
+/* ANSWER TITLE */
+
+.answer-section h2 {
+    margin: 0 0 18px;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: 18px;
+
+    color: #e8eaff;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.answer-section h2::before {
+    content: "✦";
+
+    color: #20d9ff;
+
+    font-size: 20px;
+
+    text-shadow:
+        0 0 12px #20d9ff;
+
+    display: inline-block;
+
+    animation:
+        spinStar 4s linear infinite reverse;
+}
+
+
+/* =====================================================
+   ANSWER BOX
+===================================================== */
+
+.answer {
+    min-height: 150px;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    background:
+        radial-gradient(
+            circle at 10% 50%,
+            rgba(124, 60, 255, 0.08),
+            transparent 25%
+        ),
+        rgba(3, 7, 19, 0.75);
+
+    background-size: 200% 200%;
+
+    animation:
+        morphBG 8s ease infinite alternate;
+
+    border: 1px solid rgba(100, 110, 160, 0.14);
+
+    color: #aab4ce;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    position: relative;
+
+    padding-left: 80px;
+
+    transition:
+        all 0.4s ease;
+}
+
+.answer:hover {
+    border-color: rgba(124, 60, 255, 0.3);
+
+    background-color: rgba(7, 12, 28, 0.85);
+}
+
+
+/* AI ICON */
+
+.answer::before {
+    content: "✦";
+
+    position: absolute;
+
+    left: 22px;
+    top: 24px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #20d9ff;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(124, 60, 255, 0.22),
+            rgba(0, 217, 255, 0.04)
+        );
+
+    border: 1px solid rgba(0, 217, 255, 0.35);
+
+    box-shadow:
+        0 0 20px rgba(0, 217, 255, 0.15);
+
+    animation:
+        pulseIcon 3s ease-in-out infinite alternate,
+        rotateIconBorder 6s linear infinite;
+}
+
+
+/* =========================
+   HAMSTER TEAM BADGE
+========================= */
+
+.card::after {
+    content: "🐹  HAMSTER  •  TEAM";
+
+    position: absolute;
+
+    left: 34px;
+    bottom: 14px;
+
+    color: #b88cff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    animation:
+        hamsterBounce 4s ease-in-out infinite;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+.card:hover::after {
+    color: #d1b3ff;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #03050d;
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            #7c3cff,
+            #00d9ff
+        );
+
+    border-radius: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 94%;
+        padding: 35px 0 60px;
+    }
+
+    .header h1 {
+        font-size: 55px;
+        letter-spacing: -3px;
+    }
+
+    .header h1::after {
+        font-size: 25px;
+        margin-left: 7px;
+    }
+
+    .header p::before {
+        letter-spacing: 2px;
+        font-size: 8px;
+    }
+
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .upload-area {
+        min-height: 280px;
+        padding: 35px 15px;
+    }
+
+    .upload-area > p:first-child {
+        font-size: 15px;
+    }
+
+    .question-box {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    #askButton {
+        width: 100%;
+    }
+
+    .answer-section {
+        padding: 16px;
+    }
+
+    .answer {
+        padding: 20px;
+        padding-top: 70px;
+    }
+
+    .answer::before {
+        top: 20px;
+        left: 20px;
+    }
+
+    .card::after {
+        position: static;
+
+        display: block;
+
+        margin-top: 18px;
+
+        text-align: center;
+    }
+}
+
+
+/* =========================
+   KEYFRAME ANIMATIONS
+========================= */
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes fadeInDownBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes innerSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes panGrid {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 55px 55px;
+    }
+}
+
+
+@keyframes floatGlow {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-30px, 30px) scale(1.1);
+    }
+}
+
+
+@keyframes badgePulse {
+
+    0% {
+        box-shadow:
+            0 0 10px rgba(0, 230, 167, 0.05);
+
+        border-color:
+            rgba(0, 230, 167, 0.15);
+    }
+
+    100% {
+        box-shadow:
+            0 0 25px rgba(0, 230, 167, 0.4);
+
+        border-color:
+            rgba(0, 230, 167, 0.5);
+    }
+}
+
+
+@keyframes gradientShift {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+@keyframes textShimmer {
+
+    0% {
+        opacity: 0.9;
+
+        filter:
+            drop-shadow(
+                0 0 15px rgba(124, 60, 255, 0.2)
+            );
+    }
+
+    100% {
+        opacity: 1;
+
+        filter:
+            drop-shadow(
+                0 0 35px rgba(0, 217, 255, 0.4)
+            );
+    }
+}
+
+
+@keyframes spinStar {
+
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+
+        filter: brightness(1.3);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes waveBreathe {
+
+    0% {
+        opacity: 0.4;
+
+        transform:
+            scaleY(0.9)
+            translateY(0);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scaleY(1.4)
+            translateY(-12px);
+
+        filter: brightness(1.2);
+    }
+}
+
+
+@keyframes pulseIcon {
+
+    0% {
+        box-shadow:
+            0 0 10px rgba(124, 60, 255, 0.1);
+
+        transform: scale(1);
+    }
+
+    100% {
+        box-shadow:
+            0 0 30px rgba(124, 60, 255, 0.5);
+
+        transform: scale(1.1);
+    }
+}
+
+
+@keyframes rotateIconBorder {
+
+    0% {
+        border-color:
+            rgba(124, 60, 255, 0.35);
+    }
+
+    50% {
+        border-color:
+            rgba(0, 217, 255, 0.6);
+    }
+
+    100% {
+        border-color:
+            rgba(124, 60, 255, 0.35);
+    }
+}
+
+
+@keyframes floatIdle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+
+@keyframes shineSweep {
+
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 200%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+
+@keyframes focusPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 3px rgba(0, 217, 255, 0.04),
+            0 10px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 6px rgba(0, 217, 255, 0.2),
+            0 15px 50px rgba(0, 217, 255, 0.3);
+    }
+}
+
+
+@keyframes terminalBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+
+@keyframes textGlow {
+
+    0% {
+        text-shadow:
+            0 0 5px rgba(110, 231, 183, 0.2);
+    }
+
+    100% {
+        text-shadow:
+            0 0 15px rgba(110, 231, 183, 0.8);
+    }
+}
+
+
+@keyframes hamsterBounce {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(0);
+
+        opacity: 0.75;
+    }
+
+    50% {
+        transform:
+            translateY(-4px)
+            rotate(2deg);
+
+        opacity: 1;
+
+        text-shadow:
+            0 0 10px rgba(184, 140, 255, 0.4);
+    }
+}
+
+
+@keyframes morphBG {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}

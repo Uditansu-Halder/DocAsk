@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DocAsk</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>DocAsk</h1>
+            <p>Ask questions about your documents using AI.</p>
+        </div>
+
+        <div class="card">
+
+            <div class="upload-area">
+
+                <p>Select a PDF, image, DOCX, TXT or MD document to get started.</p>
+
+                <input
+                    type="file"
+                    id="pdfFile"
+                    accept=".pdf,.png,.jpg,.jpeg,.docx,.txt,.md">
+
+                <button onclick="uploadPDF()">
+                    Upload document
+                </button>
+
+                <p
+                    id="uploadStatus"
+                    class="status"
+                ></p>
+
+            </div>
+
+            <div class="question-box">
+
+                <input
+                    type="text"
+                    id="question"
+                    placeholder="Ask something about your document..."
+                    disabled
+                >
+
+                <button id="askButton" onclick="askQuestion()" disabled>
+                    Ask
+                </button>
+
+            </div>
+
+            <div class="answer-section">
+
+                <h2>Answer</h2>
+
+                <div
+                    id="answer"
+                    class="answer"
+                >
+                    Your answer will appear here.
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html> 
