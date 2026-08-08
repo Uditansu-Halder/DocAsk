@@ -123,9 +123,6 @@ body::after {
 }
 
 
-/* =========================
-   MAIN CONTAINER
-========================= */
 
 .container {
     width: min(1100px, 92%);
@@ -181,7 +178,7 @@ body::after {
 }
 
 
-/* MAIN TITLE */
+
 
 .header h1 {
     margin: 0;
@@ -245,7 +242,7 @@ body::after {
 }
 
 
-/* SUBTITLE */
+
 
 .header p {
     margin: 22px 0 0;
@@ -275,9 +272,6 @@ body::after {
 }
 
 
-/* =========================
-   MAIN CARD
-========================= */
 
 .card {
     position: relative;
@@ -321,7 +315,7 @@ body::after {
 }
 
 
-/* CARD TOP GLOW */
+
 
 .card::before {
     content: "";
@@ -357,9 +351,7 @@ body::after {
 }
 
 
-/* =========================
-   UPLOAD AREA
-========================= */
+
 
 .upload-area {
     position: relative;
@@ -424,7 +416,7 @@ body::after {
 }
 
 
-/* UPLOAD CHILD ANIMATIONS */
+
 
 .upload-area > * {
     animation:
@@ -520,9 +512,7 @@ body::after {
 }
 
 
-/* =========================
-   FILE INPUT
-========================= */
+
 
 #pdfFile {
     width: min(600px, 100%);
@@ -559,7 +549,7 @@ body::after {
 }
 
 
-/* FILE BUTTON */
+
 
 #pdfFile::file-selector-button {
     margin-right: 15px;
@@ -604,9 +594,7 @@ body::after {
 }
 
 
-/* =========================
-   UPLOAD BUTTON
-========================= */
+
 
 .upload-area button {
     margin-top: 22px;
@@ -615,9 +603,6 @@ body::after {
 }
 
 
-/* =========================
-   ALL BUTTONS
-========================= */
 
 button {
     position: relative;
@@ -707,9 +692,6 @@ button:active {
 }
 
 
-/* =========================
-   STATUS
-========================= */
 
 .status {
     min-height: 18px;
@@ -726,9 +708,6 @@ button:active {
 }
 
 
-/* =====================================================
-   QUESTION SECTION
-===================================================== */
 
 .question-box {
     display: flex;
@@ -756,7 +735,7 @@ button:active {
 }
 
 
-/* ACTIVE QUESTION BOX */
+
 
 .question-box:focus-within {
     border-color: rgba(0, 217, 255, 0.6);
@@ -770,14 +749,6 @@ button:active {
 }
 
 
-/* =====================================================
-   DISABLED QUESTION BOX
-===================================================== */
-
-/*
-   This state is active while the HTML input has:
-   disabled
-*/
 
 .question-box:has(#question:disabled) {
     opacity: 0.55;
@@ -804,7 +775,7 @@ button:active {
 }
 
 
-/* DISABLED QUESTION INPUT */
+
 
 #question:disabled {
     color: #555d76;
@@ -821,7 +792,7 @@ button:active {
 }
 
 
-/* DISABLED ASK BUTTON */
+
 
 #askButton:disabled {
     color: #656d86;
@@ -850,16 +821,14 @@ button:active {
 }
 
 
-/* REMOVE SHINE FROM DISABLED BUTTON */
+
 
 #askButton:disabled::before {
     display: none;
 }
 
 
-/* =====================================================
-   QUESTION INPUT
-===================================================== */
+
 
 #question {
     flex: 1;
@@ -896,16 +865,14 @@ button:active {
 }
 
 
-/* ASK BUTTON */
+
 
 #askButton {
     min-width: 110px;
 }
 
 
-/* =====================================================
-   ANSWER SECTION
-===================================================== */
+
 
 .answer-section {
     margin-top: 25px;
@@ -941,7 +908,7 @@ button:active {
 }
 
 
-/* ANSWER TITLE */
+
 
 .answer-section h2 {
     margin: 0 0 18px;
@@ -976,9 +943,7 @@ button:active {
 }
 
 
-/* =====================================================
-   ANSWER BOX
-===================================================== */
+
 
 .answer {
     min-height: 150px;
@@ -1023,7 +988,7 @@ button:active {
 }
 
 
-/* AI ICON */
+
 
 .answer::before {
     content: "✦";
@@ -1098,9 +1063,7 @@ button:active {
 }
 
 
-/* =========================
-   SCROLLBAR
-========================= */
+
 
 ::-webkit-scrollbar {
     width: 7px;
@@ -1121,9 +1084,7 @@ button:active {
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 
 @media (max-width: 700px) {
 
@@ -1196,9 +1157,7 @@ button:active {
 }
 
 
-/* =========================
-   KEYFRAME ANIMATIONS
-========================= */
+
 
 @keyframes fadeInSlideUp {
     from {
