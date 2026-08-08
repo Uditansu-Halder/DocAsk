@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://127.0.0.1:8000";
+const BACKEND_URL = "https://docask-2bka.onrender.com";
 
 async function uploadPDF() {
     const fileInput = document.querySelector("#pdfFile");
