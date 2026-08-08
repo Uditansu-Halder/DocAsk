@@ -23,3 +23,4 @@ def test_build_citation_payload_uses_source_metadata():
     assert citations[0]["type"] == "PDF"
     assert citations[0]["location"] == "Page 2"
     assert citations[0]["preview"].startswith("This is a relevant excerpt")
+#test
