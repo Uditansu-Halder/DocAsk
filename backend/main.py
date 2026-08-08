@@ -4,6 +4,9 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from google import genai
 
+from chunking import create_chunks
+from retrieval import retrieve_chunks
+
 import importlib
 import os
 import tempfile
@@ -48,6 +51,7 @@ client = genai.Client(
 
 document_text = ""
 document_filename = ""
+document_chunks = []
 
 
 # --------------------------------------------------
@@ -224,21 +228,20 @@ async def upload_document(
 
     global document_text
     global document_filename
+    global document_chunks
 
+    # Check filename
     if not file.filename:
-
         raise HTTPException(
             status_code=400,
             detail="No filename provided."
         )
 
     filename = file.filename
-
     extension = Path(filename).suffix.lower()
 
     # Check extension
     if extension not in ALLOWED_EXTENSIONS:
-
         raise HTTPException(
             status_code=400,
             detail=(
@@ -249,22 +252,30 @@ async def upload_document(
 
     try:
 
+        # ------------------------------------------
         # Read uploaded file
+        # ------------------------------------------
+
         contents = await file.read()
 
+        # ------------------------------------------
         # Create temporary file
+        # ------------------------------------------
+
         with tempfile.NamedTemporaryFile(
             delete=False,
             suffix=extension
         ) as temp_file:
 
             temp_file.write(contents)
-
             temp_file_path = temp_file.name
 
         try:
 
+            # --------------------------------------
             # Extract text
+            # --------------------------------------
+
             text = extract_text_from_file(
                 temp_file_path,
                 filename
@@ -272,13 +283,18 @@ async def upload_document(
 
         finally:
 
+            # --------------------------------------
             # Delete temporary file
-            if os.path.exists(temp_file_path):
+            # --------------------------------------
 
+            if os.path.exists(temp_file_path):
                 os.remove(temp_file_path)
 
-        # Make sure something was extracted
-        if not text.strip():
+        # ------------------------------------------
+        # Check extracted text
+        # ------------------------------------------
+
+        if not text or not text.strip():
 
             raise HTTPException(
                 status_code=400,
@@ -288,13 +304,36 @@ async def upload_document(
                 )
             )
 
+        # ------------------------------------------
+        # Create regex-based chunks
+        # ------------------------------------------
+
+        chunks = create_chunks(text)
+
+        if not chunks:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Could not create chunks from this document."
+            )
+
+        # ------------------------------------------
+        # Store document
+        # ------------------------------------------
+
         document_text = text
         document_filename = filename
+        document_chunks = chunks
+
+        # ------------------------------------------
+        # Return upload information
+        # ------------------------------------------
 
         return {
             "message": "Document uploaded successfully.",
             "filename": filename,
-            "characters": len(text)
+            "characters": len(text),
+            "chunks": len(chunks)
         }
 
     except HTTPException:
@@ -317,29 +356,105 @@ async def upload_document(
 @app.post("/ask")
 def ask_question(data: Question):
 
-    if not document_text:
+    global document_chunks
+
+    # ------------------------------------------
+    # Check if document exists
+    # ------------------------------------------
+
+    if not document_chunks:
+
+        raise HTTPException(
+            status_code=400,
+            detail="Please upload a document first."
+        )
+
+    # ------------------------------------------
+    # Validate question
+    # ------------------------------------------
+
+    question = data.question.strip()
+
+    if not question:
+
+        raise HTTPException(
+            status_code=400,
+            detail="Please enter a question."
+        )
+
+    # ------------------------------------------
+    # Retrieve relevant chunks
+    # ------------------------------------------
+
+    relevant_chunks = retrieve_chunks(
+        question,
+        document_chunks,
+        top_k=5
+    )
+
+    # ------------------------------------------
+    # No relevant chunks found
+    # ------------------------------------------
+
+    if not relevant_chunks:
 
         return {
-            "message": "Please upload a document first."
+            "answer": (
+                "I couldn't find relevant information "
+                "in the uploaded document."
+            ),
+            "sources": []
         }
+
+    # ------------------------------------------
+    # Build document context
+    # ------------------------------------------
+
+    context_parts = []
+
+    for chunk in relevant_chunks:
+
+        context_parts.append(
+            f"""
+SOURCE: {chunk["chunk_id"]}
+
+{chunk["text"]}
+"""
+        )
+
+    context = "\n".join(context_parts)
+
+    # ------------------------------------------
+    # Gemini prompt
+    # ------------------------------------------
 
     prompt = f"""
 You are DocAsk, a document question-answering assistant.
 
-Answer the user's question ONLY using the uploaded document.
-
-If the document does not contain enough information,
-say that you could not find sufficient information.
+Answer the user's question ONLY using the provided
+document context.
 
 Do not use outside knowledge.
+
 Do not make up information.
 
-DOCUMENT:
-{document_text}
+If the answer cannot be found in the provided context,
+say that the information was not found in the document.
+
+Do not create or invent citations.
+
+DOCUMENT CONTEXT:
+
+{context}
 
 QUESTION:
-{data.question}
+
+{question}
 """
+
+    # ------------------------------------------
+    # Generate answer with Gemini
+    # ------------------------------------------
 
     try:
 
@@ -348,14 +463,36 @@ QUESTION:
             contents=prompt
         )
 
+        answer = response.text
+
+        # --------------------------------------
+        # Build sources
+        # --------------------------------------
+
+        sources = []
+
+        for chunk in relevant_chunks:
+
+            sources.append({
+                "chunk_id": chunk["chunk_id"],
+                "score": chunk["score"],
+                "preview": chunk["text"][:400]
+            })
+
+        # --------------------------------------
+        # Return answer + sources
+        # --------------------------------------
+
         return {
-            "message": response.text
+            "answer": answer,
+            "sources": sources
         }
 
     except Exception as e:
 
         print("AI Error:", e)
 
-        return {
-            "message": "Sorry, I couldn't generate an answer."
-        }
+        raise HTTPException(
+            status_code=500,
+            detail="Sorry, I couldn't generate an answer."
+        )

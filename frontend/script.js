@@ -44,8 +44,13 @@ questionField.addEventListener("keydown", (evt)=>{
 });
 
 async function askQuestion() {
-    const question = questionField.value;
+    const question = questionField.value.trim();
     const answerElement = document.querySelector("#answer");
+
+    if (!question) {
+        answerElement.textContent = "Please enter a question.";
+        return;
+    }
 
     answerElement.textContent = "Thinking...";
 
@@ -61,8 +66,21 @@ async function askQuestion() {
         });
 
         const data = await response.json();
-        answerElement.textContent = data.message;
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Failed to get answer."
+            );
+        }
+
+        // Display the answer
+        answerElement.textContent = data.answer;
+
     } catch (error) {
-        answerElement.textContent = "Sorry, I couldn't generate an answer.";
+
+        console.error("Ask Error:", error);
+
+        answerElement.textContent =
+            error.message || "Sorry, I couldn't generate an answer.";
     }
 }
