@@ -571,9 +571,7 @@ QUESTION:
 
         citations = build_citation_payload(relevant_chunks)
 
-        # --------------------------------------
-        # Return answer + sources + citations
-        # --------------------------------------
+        
 
         return {
             "answer": answer,
