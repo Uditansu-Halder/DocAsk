@@ -7,21 +7,17 @@ CHUNK_OVERLAP = 150
 
 def clean_text(text: str) -> str:
     """
-    Clean text extracted from a document using regular expressions.
+    Clean extracted text while preserving useful
+    paragraph/line boundaries.
     """
 
-    # Normalize Windows line endings
     text = text.replace("\r\n", "\n")
     text = text.replace("\r", "\n")
 
-    # Replace tabs with spaces
-    text = re.sub(r"\t+", " ", text)
+    text = re.sub(r"[ \t]+", " ", text)
 
-    # Remove excessive spaces
-    text = re.sub(r"[ ]{2,}", " ", text)
-
-    # Keep paragraph breaks but remove excessive blank lines
     text = re.sub(r"\n[ \t]+", "\n", text)
+
     text = re.sub(r"\n{3,}", "\n\n", text)
 
     return text.strip()
@@ -29,7 +25,7 @@ def clean_text(text: str) -> str:
 
 def split_into_sentences(text: str) -> list[str]:
     """
-    Split text into sentences using regular expressions.
+    Regex-based sentence splitting.
     """
 
     sentences = re.split(
@@ -44,77 +40,129 @@ def split_into_sentences(text: str) -> list[str]:
     ]
 
 
-def create_chunks(text: str) -> list[dict]:
-    """
-    Create overlapping chunks using regex-based sentence splitting.
-    """
-
-    text = clean_text(text)
-
-    if not text:
-        return []
-
-    sentences = split_into_sentences(text)
+def create_chunks(
+    documents: list[dict]
+) -> list[dict]:
 
     chunks = []
 
-    current_chunk = []
-    current_length = 0
-
     chunk_number = 1
 
-    for sentence in sentences:
+    current_sentences = []
+    current_length = 0
 
-        sentence_length = len(sentence)
+    current_source = None
 
-        # If adding this sentence exceeds the chunk size,
-        # save the current chunk first.
-        if (
-            current_chunk
-            and current_length + sentence_length > CHUNK_SIZE
-        ):
+    for document in documents:
 
-            chunk_text = " ".join(current_chunk).strip()
+        text = clean_text(
+            document["text"]
+        )
 
-            chunks.append({
-                "chunk_id": f"chunk_{chunk_number:03d}",
-                "text": chunk_text
-            })
+        if not text:
+            continue
 
-            chunk_number += 1
+        sentences = split_into_sentences(text)
 
-            # Create overlap using the last few sentences
-            overlap_text = ""
-            overlap_sentences = []
+        for sentence in sentences:
 
-            for previous_sentence in reversed(current_chunk):
+            sentence_length = len(sentence)
 
-                if len(overlap_text) >= CHUNK_OVERLAP:
-                    break
+            # Start source metadata
+            if current_source is None:
+                current_source = document["source"]
 
-                overlap_sentences.insert(
-                    0,
-                    previous_sentence
-                )
+            # If adding this sentence would
+            # exceed the chunk size
+            if (
+                current_sentences
+                and
+                current_length + sentence_length
+                > CHUNK_SIZE
+            ):
 
-                overlap_text = " ".join(
+                chunk_text = " ".join(
+                    current_sentences
+                ).strip()
+
+                chunks.append({
+                    "chunk_id":
+                        f"chunk_{chunk_number:03d}",
+
+                    "text":
+                        chunk_text,
+
+                    "source":
+                        current_source
+                })
+
+                chunk_number += 1
+
+                # --------------------------------
+                # Overlap
+                # --------------------------------
+
+                overlap_sentences = []
+                overlap_length = 0
+
+                for previous_sentence in reversed(
+                    current_sentences
+                ):
+
+                    if (
+                        overlap_length
+                        >= CHUNK_OVERLAP
+                    ):
+                        break
+
+                    overlap_sentences.insert(
+                        0,
+                        previous_sentence
+                    )
+
+                    overlap_length += len(
+                        previous_sentence
+                    )
+
+                current_sentences = (
                     overlap_sentences
                 )
 
-            current_chunk = overlap_sentences
-            current_length = len(overlap_text)
+                current_length = (
+                    overlap_length
+                )
 
-        current_chunk.append(sentence)
-        current_length += sentence_length
+                current_source = (
+                    document["source"]
+                )
 
-    # Add final chunk
-    if current_chunk:
+            current_sentences.append(
+                sentence
+            )
 
-        chunk_text = " ".join(current_chunk).strip()
+            current_length += (
+                sentence_length
+            )
+
+    # --------------------------------------------
+    # Final chunk
+    # --------------------------------------------
+
+    if current_sentences:
+
+        chunk_text = " ".join(
+            current_sentences
+        ).strip()
 
         chunks.append({
-            "chunk_id": f"chunk_{chunk_number:03d}",
-            "text": chunk_text
+            "chunk_id":
+                f"chunk_{chunk_number:03d}",
+
+            "text":
+                chunk_text,
+
+            "source":
+                current_source
         })
 
     return chunks

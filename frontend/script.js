@@ -35,13 +35,55 @@ async function uploadPDF() {
     }
 }
 
-let questionField=document.querySelector("#question");
-questionField.addEventListener("keydown", (evt)=>{
-    if(evt.key==="Enter"){
+let questionField = document.querySelector("#question");
+questionField.addEventListener("keydown", (evt) => {
+    if (evt.key === "Enter") {
         evt.preventDefault();
         askQuestion();
     }
 });
+
+function renderCitations(citations) {
+    const citationsList = document.querySelector("#citations");
+    const citationSummary = document.querySelector("#citationSummary");
+    const citationPreview = document.querySelector("#citationPreview");
+
+    citationsList.innerHTML = "";
+
+    if (!citations.length) {
+        citationSummary.textContent = "No citations yet.";
+        citationPreview.textContent = "Select a citation to preview the relevant source excerpt.";
+        return;
+    }
+
+    citationSummary.textContent = `${citations.length} citation${citations.length > 1 ? "s" : ""}`;
+
+    citations.forEach((citation, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "citation-item";
+        button.innerHTML = `
+            <span class="citation-index">${index + 1}</span>
+            <span class="citation-meta">${citation.type} • ${citation.location}</span>
+        `;
+
+        button.addEventListener("click", () => {
+            citationPreview.innerHTML = `
+                <strong>Citation ${index + 1}</strong>
+                <p>${citation.preview || "No preview available."}</p>
+            `;
+        });
+
+        citationsList.appendChild(button);
+    });
+
+    if (citations[0]) {
+        citationPreview.innerHTML = `
+            <strong>Citation 1</strong>
+            <p>${citations[0].preview || "No preview available."}</p>
+        `;
+    }
+}
 
 async function askQuestion() {
     const question = questionField.value.trim();
@@ -53,6 +95,7 @@ async function askQuestion() {
     }
 
     answerElement.textContent = "Thinking...";
+    renderCitations([]);
 
     try {
         const response = await fetch(`${BACKEND_URL}/ask`, {
@@ -73,14 +116,13 @@ async function askQuestion() {
             );
         }
 
-        // Display the answer
         answerElement.textContent = data.answer;
-
+        renderCitations(data.citations || data.sources || []);
     } catch (error) {
-
         console.error("Ask Error:", error);
 
         answerElement.textContent =
             error.message || "Sorry, I couldn't generate an answer.";
+        renderCitations([]);
     }
 }

@@ -1029,6 +1029,99 @@ button:active {
 
 
 /* =========================
+   CITATIONS
+========================= */
+
+.citations-section {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: rgba(4, 7, 19, 0.7);
+    border: 1px solid rgba(100, 110, 160, 0.16);
+}
+
+.citations-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.citations-header h3 {
+    margin: 0;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #9fdcff;
+}
+
+#citationSummary {
+    font-size: 12px;
+    color: #6ee7b7;
+}
+
+.citations-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.citation-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(124, 60, 255, 0.12);
+    border: 1px solid rgba(124, 60, 255, 0.24);
+    color: #e9ebff;
+    cursor: pointer;
+    font-size: 12px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.citation-item:hover {
+    transform: translateY(-1px);
+    border-color: rgba(0, 217, 255, 0.45);
+}
+
+.citation-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(0, 217, 255, 0.16);
+    color: #8fefff;
+    font-weight: 700;
+}
+
+.citation-meta {
+    color: #dbe3ff;
+}
+
+.citation-preview {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(3, 8, 24, 0.75);
+    border: 1px solid rgba(100, 110, 160, 0.14);
+    color: #aab4ce;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.citation-preview strong {
+    color: #cfeeff;
+}
+
+.citation-preview p {
+    margin: 8px 0 0;
+}
+
+/* =========================
    HAMSTER TEAM BADGE
 ========================= */
 
