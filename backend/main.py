@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from google import genai
 import re
-
+# uu ss
 from chunking import create_chunks
 from retrieval import retrieve_chunks
 from citations import build_citation_payload
@@ -187,17 +187,24 @@ def extract_text_from_image(file_path: str) -> list[dict]:
             "Image OCR requires Pillow and pytesseract."
         )
 
-    # Change this path if Tesseract is installed elsewhere
-    tesseract_path = (
-        r"C:\Program Files\Tesseract-OCR"
-        r"\tesseract.exe"
-    )
+    if os.name == "nt":  # Windows
 
-    if os.path.exists(tesseract_path):
+        tesseract_path = (
+            r"C:\Program Files\Tesseract-OCR"
+            r"\tesseract.exe"
+        )
+
+        if os.path.exists(tesseract_path):
+            pytesseract.pytesseract.tesseract_cmd = (
+                tesseract_path
+            )
+
+    else:  # Linux (Render)
 
         pytesseract.pytesseract.tesseract_cmd = (
-            tesseract_path
+            "/usr/bin/tesseract"
         )
+
 
     image = Image.open(file_path)
 
@@ -218,7 +225,7 @@ def extract_text_from_image(file_path: str) -> list[dict]:
     ]
 
 # --------------------------------------------------
-# Image OCR
+# Txt extraction
 # --------------------------------------------------
 
 def extract_text_from_txt(file_path: str) -> list[dict]:
