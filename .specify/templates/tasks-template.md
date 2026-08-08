@@ -1,162 +1,156 @@
+# Tasks: DocAsk - Document Question Answering
+
+**Input**: Design documents from `/specs/001-docask/`
+
+**Prerequisites**: `plan.md`, `spec.md`, `research.md`, `data-model.md`, `contracts/`
+
+**Tests**: No dedicated test tasks are included because tests were not explicitly requested in the feature specification.
+
+**Organization**: Tasks are grouped by user story to enable incremental implementation and independent validation.
+
 ---
-
-description: "Task list template for feature implementation"
----
-
-# Tasks: [FEATURE NAME]
-
-**Input**: Design documents from `/specs/[###-feature-name]/`
-
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
-
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
-
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
-
-## Format: `[ID] [P?] [Story] Description`
-
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
-
-## Path Conventions
-
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
-
-<!--
-  ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
-
-  The /speckit-tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
-
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
-
-  DO NOT keep these sample tasks in the generated tasks.md file.
-  ============================================================================
--->
 
 ## Phase 1: Setup (Shared Infrastructure)
 
-**Purpose**: Project initialization and basic structure
+**Purpose**: Initialize the DocAsk project and establish the frontend/backend structure.
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+* [ ] T001 Create the project structure according to `specs/001-docask/plan.md`
+* [ ] T002 Initialize the Python backend environment and dependency configuration in `backend/requirements.txt`
+* [ ] T003 [P] Create the FastAPI application entry point in `backend/src/main.py`
+* [ ] T004 [P] Create backend package directories and initialization files under `backend/src/`
+* [ ] T005 [P] Create frontend structure with `frontend/index.html`, `frontend/css/`, `frontend/js/`, and `frontend/assets/`
+* [ ] T006 [P] Create the environment configuration template in `backend/.env.example`
+* [ ] T007 Configure `.gitignore` to exclude virtual environments, environment files, uploaded documents, temporary files, caches, and generated artifacts
+* [ ] T008 Configure Uvicorn startup and basic FastAPI application settings in `backend/src/main.py`
 
 ---
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
+**Purpose**: Implement the shared infrastructure required by all user stories.
 
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+**⚠️ CRITICAL**: User story implementation begins only after this phase is complete.
 
-Examples of foundational tasks (adjust based on your project):
+* [ ] T009 Create application configuration management in `backend/src/core/config.py`
+* [ ] T010 [P] Create shared API response and request schemas in `backend/src/models/schemas.py`
+* [ ] T011 [P] Implement application-wide error handling in `backend/src/main.py`
+* [ ] T012 [P] Configure structured application logging in `backend/src/main.py`
+* [ ] T013 Create document data model and processing-state representation in `backend/src/models/document.py`
+* [ ] T014 Create document storage and lifecycle management service in `backend/src/services/document_service.py`
+* [ ] T015 Create supported-file validation logic in `backend/src/services/document_service.py`
+* [ ] T016 [P] Create API router structure in `backend/src/api/upload.py` and `backend/src/api/chat.py`
+* [ ] T017 Create temporary upload and processing directories required by the application
+* [ ] T018 Configure Gemini client initialization using environment-based credentials in `backend/src/services/ai_service.py`
+* [ ] T019 Configure the frontend API communication layer in `frontend/js/api.js`
+* [ ] T020 Create the basic DocAsk page structure and document-upload area in `frontend/index.html`
+* [ ] T021 [P] Create initial frontend styling in `frontend/css/style.css`
+* [ ] T022 [P] Create frontend application state and utility functions in `frontend/js/app.js`
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: Foundation ready — file processing, retrieval, AI integration, and user stories can now be implemented.
 
 ---
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+## Phase 3: User Story 1 - Upload and Process a Document (Priority: P1) 🎯 MVP
 
-**Goal**: [Brief description of what this story delivers]
+**Goal**: Allow users to upload PDF, DOCX, TXT, PNG, JPG, and JPEG files and convert them into usable text for question answering.
 
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
-
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
-
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+**Independent Test**: Upload a valid document in each supported format and verify that the system validates it, extracts or recognizes its text, and reports successful processing. Upload an unsupported or unreadable file and verify that an appropriate error is returned.
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+* [ ] T023 [P] [US1] Implement PDF text extraction using `pypdf` in `backend/src/services/extraction_service.py`
+* [ ] T024 [P] [US1] Implement DOCX text extraction using `python-docx` in `backend/src/services/extraction_service.py`
+* [ ] T025 [P] [US1] Implement TXT file reading and text extraction in `backend/src/services/extraction_service.py`
+* [ ] T026 [P] [US1] Implement image loading and preprocessing for PNG, JPG, and JPEG files in `backend/src/services/ocr_service.py`
+* [ ] T027 [P] [US1] Implement OCR text recognition for PNG, JPG, and JPEG files in `backend/src/services/ocr_service.py`
+* [ ] T028 [US1] Implement file-type-based extraction routing in `backend/src/services/document_service.py`
+* [ ] T029 [US1] Implement extracted-text cleaning and normalization in `backend/src/services/extraction_service.py`
+* [ ] T030 [US1] Detect empty or unusable extraction/OCR results in `backend/src/services/document_service.py`
+* [ ] T031 [US1] Implement document processing status transitions in `backend/src/services/document_service.py`
+* [ ] T032 [US1] Implement document upload endpoint in `backend/src/api/upload.py`
+* [ ] T033 [US1] Connect the frontend upload form to the backend upload endpoint in `frontend/js/upload.js`
+* [ ] T034 [US1] Display upload and processing states in `frontend/index.html` and `frontend/js/upload.js`
+* [ ] T035 [US1] Display unsupported-file, extraction, OCR, and processing errors in `frontend/js/upload.js`
+* [ ] T036 [US1] Preserve processed document metadata and extracted content for subsequent retrieval in `backend/src/services/document_service.py`
+* [ ] T037 [US1] Verify the complete upload-to-text-processing flow for PDF, DOCX, TXT, PNG, JPG, and JPEG
 
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Checkpoint**: User Story 1 is complete when a supported document can be uploaded, processed, and prepared for question answering independently.
 
 ---
 
-## Phase 4: User Story 2 - [Title] (Priority: P2)
+## Phase 4: User Story 2 - Ask Questions About the Document (Priority: P1)
 
-**Goal**: [Brief description of what this story delivers]
+**Goal**: Allow users to ask natural-language questions about a successfully processed document and receive answers grounded in its content.
 
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+**Independent Test**: Upload a document containing known information, ask questions whose answers are present and absent from the document, and verify that the system retrieves relevant content and responds appropriately.
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+* [ ] T038 [US2] Implement text chunking logic in `backend/src/services/chunking_service.py`
+* [ ] T039 [US2] Associate generated chunks with their source document in `backend/src/services/chunking_service.py`
+* [ ] T040 [US2] Integrate chunk generation into the document-processing pipeline in `backend/src/services/document_service.py`
+* [ ] T041 [US2] Implement lightweight document-chunk retrieval in `backend/src/services/retrieval_service.py`
+* [ ] T042 [US2] Implement question validation and normalization in `backend/src/services/retrieval_service.py`
+* [ ] T043 [US2] Implement relevant-context selection from processed document chunks in `backend/src/services/retrieval_service.py`
+* [ ] T044 [US2] Implement Gemini prompt construction using retrieved document context in `backend/src/services/ai_service.py`
+* [ ] T045 [US2] Implement grounded answer generation using Gemini in `backend/src/services/ai_service.py`
+* [ ] T046 [US2] Implement handling for questions where no relevant document content is found in `backend/src/services/retrieval_service.py`
+* [ ] T047 [US2] Implement handling for questions whose requested information is absent from the document in `backend/src/services/ai_service.py`
+* [ ] T048 [US2] Ensure Gemini receives only the appropriate document context associated with the active document in `backend/src/services/ai_service.py`
+* [ ] T049 [US2] Implement question-answering API endpoint in `backend/src/api/chat.py`
+* [ ] T050 [US2] Connect the frontend question input to the question-answering API in `frontend/js/chat.js`
+* [ ] T051 [US2] Display generated answers in the frontend chat interface in `frontend/js/chat.js`
+* [ ] T052 [US2] Display a loading state while retrieval and Gemini processing are in progress in `frontend/js/chat.js`
+* [ ] T053 [US2] Handle empty, invalid, or unanswered questions in `frontend/js/chat.js`
+* [ ] T054 [US2] Handle Gemini API failures and timeout responses in `backend/src/services/ai_service.py`
+* [ ] T055 [US2] Verify the complete document-question-answering flow from uploaded document to grounded answer
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+**Checkpoint**: User Story 2 is complete when users can upload a document, ask questions about it, and receive grounded answers independently.
 
 ---
 
-## Phase 5: User Story 3 - [Title] (Priority: P3)
+## Phase 5: User Story 3 - View and Handle Results (Priority: P2)
 
-**Goal**: [Brief description of what this story delivers]
+**Goal**: Provide a clear and understandable interface for answers, processing states, and failures.
 
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+**Independent Test**: Run successful and failed upload/question-answering scenarios and verify that the frontend clearly communicates each result without exposing internal implementation details.
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+* [ ] T056 [P] [US3] Implement reusable frontend status-message handling in `frontend/js/app.js`
+* [ ] T057 [P] [US3] Implement upload progress and processing indicators in `frontend/js/upload.js`
+* [ ] T058 [P] [US3] Implement question-answer loading indicators in `frontend/js/chat.js`
+* [ ] T059 [US3] Implement user-friendly error message mapping for backend API errors in `frontend/js/api.js`
+* [ ] T060 [US3] Display document processing status in the main interface in `frontend/index.html` and `frontend/js/upload.js`
+* [ ] T061 [US3] Display clear document-processing failure messages in `frontend/js/upload.js`
+* [ ] T062 [US3] Display clear question-answering failure messages in `frontend/js/chat.js`
+* [ ] T063 [US3] Ensure backend errors do not expose API keys, credentials, stack traces, or internal configuration in `backend/src/main.py`
+* [ ] T064 [US3] Ensure frontend does not expose Gemini credentials or backend secrets
+* [ ] T065 [US3] Verify successful, failed, and incomplete workflows through the web interface
 
-**Checkpoint**: All user stories should now be independently functional
+**Checkpoint**: All three user stories should now provide a complete and understandable DocAsk workflow.
 
 ---
 
-[Add more user story phases as needed, following the same pattern]
+## Phase 6: Polish & Cross-Cutting Concerns
 
----
+**Purpose**: Improve reliability, maintainability, documentation, and deployment readiness across the complete application.
 
-## Phase N: Polish & Cross-Cutting Concerns
-
-**Purpose**: Improvements that affect multiple user stories
-
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
+* [ ] T066 [P] Update `specs/001-docask/quickstart.md` with complete local setup and execution instructions
+* [ ] T067 [P] Document supported file formats and processing behavior in `specs/001-docask/quickstart.md`
+* [ ] T068 [P] Document backend API endpoints and request/response formats in `specs/001-docask/contracts/`
+* [ ] T069 Review all environment variables and update `backend/.env.example`
+* [ ] T070 Review uploaded-file validation and processing for security weaknesses
+* [ ] T071 Review temporary-file handling and ensure temporary uploads are cleaned up appropriately
+* [ ] T072 Review error handling across extraction, OCR, chunking, retrieval, and Gemini integration
+* [ ] T073 Review logging to ensure secrets and sensitive document contents are not unnecessarily logged
+* [ ] T074 [P] Refactor duplicated backend logic across `backend/src/services/`
+* [ ] T075 [P] Refactor duplicated frontend logic across `frontend/js/`
+* [ ] T076 Review frontend layout and responsive behavior in `frontend/css/style.css`
+* [ ] T077 Verify all six supported formats: PDF, DOCX, TXT, PNG, JPG, and JPEG
+* [ ] T078 Verify the complete workflow against the acceptance scenarios in `specs/001-docask/spec.md`
+* [ ] T079 Run the quickstart procedure from a clean environment and resolve any setup issues
+* [ ] T080 Confirm the MVP can be demonstrated without a vector database or additional infrastructure
 
 ---
 
@@ -164,89 +158,188 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Phase Dependencies
 
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+* **Setup (Phase 1)**: No dependencies — can start immediately.
+* **Foundational (Phase 2)**: Depends on Phase 1 completion and blocks all user stories.
+* **User Story 1 (Phase 3)**: Depends on Phase 2.
+* **User Story 2 (Phase 4)**: Depends on the document-processing capability established by US1, particularly processed document content.
+* **User Story 3 (Phase 5)**: Depends on the frontend/backend behavior established by US1 and US2.
+* **Polish (Phase 6)**: Depends on completion of the desired user stories.
 
 ### User Story Dependencies
 
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
+* **User Story 1 (P1)**: Starts after Foundational phase. Provides the document-processing foundation required by the application.
+* **User Story 2 (P1)**: Starts after Foundational phase but practically depends on US1's document-processing pipeline being available.
+* **User Story 3 (P2)**: Builds on the upload and question-answering workflows from US1 and US2.
+
+Unlike independent CRUD-style stories, the DocAsk stories form a natural processing pipeline:
+
+```text
+US1: Upload & Process
+          │
+          ▼
+US2: Ask Questions
+          │
+          ▼
+US3: Display & Handle Results
+```
+
+Therefore, implementing US1 → US2 → US3 sequentially is the recommended approach for this project.
 
 ### Within Each User Story
 
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
-- Story complete before moving to next priority
+* Shared models and infrastructure must exist before dependent services.
+* Extraction/OCR must be available before chunking.
+* Chunking must be available before retrieval.
+* Retrieval must be available before grounded AI generation.
+* Backend endpoints must be implemented before frontend API integration.
+* Core implementation should be completed before final workflow validation.
 
 ### Parallel Opportunities
 
-- All Setup tasks marked [P] can run in parallel
-- All Foundational tasks marked [P] can run in parallel (within Phase 2)
-- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
-- All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members
+After Phase 2:
+
+* PDF, DOCX, and TXT extraction can be developed in parallel.
+* OCR preprocessing and OCR recognition can be developed in parallel with text-based extraction.
+* Frontend upload UI can be developed in parallel with backend extraction services.
+* Frontend chat UI can be developed in parallel with backend retrieval development.
+* Documentation tasks in Phase 6 can be performed in parallel.
+* Frontend refactoring and backend refactoring can be performed independently.
 
 ---
 
 ## Parallel Example: User Story 1
 
-```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+```text
+Developer A:
+T023 PDF extraction
+T024 DOCX extraction
+T025 TXT extraction
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+Developer B:
+T026 Image preprocessing
+T027 OCR recognition
+
+Developer C:
+T033 Frontend upload integration
+T034 Upload/processing UI
+T035 Error display
 ```
+
+These tasks can proceed in parallel because they primarily operate on different files and components.
+
+---
+
+## Parallel Example: User Story 2
+
+```text
+Developer A:
+T038 Chunking
+T039 Chunk-document association
+
+Developer B:
+T041 Retrieval
+T042 Question validation
+T043 Context selection
+
+Developer C:
+T050 Frontend question integration
+T051 Answer display
+T052 Loading state
+```
+
+Gemini integration tasks should begin once the retrieval/context contract is established.
 
 ---
 
 ## Implementation Strategy
 
-### MVP First (User Story 1 Only)
+### MVP First
 
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready
+The recommended MVP path is:
+
+1. Complete Phase 1: Setup.
+2. Complete Phase 2: Foundational infrastructure.
+3. Complete Phase 3: User Story 1.
+4. **STOP and VALIDATE** document upload and processing.
+5. Complete the minimum required parts of Phase 4: User Story 2.
+6. **STOP and VALIDATE** document question answering.
+7. Complete the essential parts of Phase 5: User Story 3.
+8. **STOP and DEMO** the complete DocAsk workflow.
+
+The minimum demonstrable MVP is:
+
+```text
+Upload document
+      ↓
+Validate file
+      ↓
+Extract text / OCR
+      ↓
+Clean text
+      ↓
+Chunk text
+      ↓
+Retrieve relevant chunks
+      ↓
+Send context to Gemini
+      ↓
+Generate grounded answer
+      ↓
+Display answer
+```
 
 ### Incremental Delivery
 
-1. Complete Setup + Foundational → Foundation ready
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
-3. Add User Story 2 → Test independently → Deploy/Demo
-4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
+1. **Foundation** → FastAPI + frontend skeleton.
+2. **US1** → Six-format document upload and processing.
+3. **US2** → Chunking + retrieval + Gemini question answering.
+4. **US3** → Complete user-facing feedback and error handling.
+5. **Polish** → Documentation, security review, cleanup, and final validation.
 
-### Parallel Team Strategy
+### Team Strategy
 
-With multiple developers:
+For the four-person team, the recommended split is:
 
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+**Backend Developer**
+
+* Document validation
+* PDF/DOCX/TXT extraction
+* OCR
+* Chunking
+* Retrieval
+* Gemini integration
+* FastAPI endpoints
+
+**Frontend Developers**
+
+* Upload interface
+* Processing states
+* Chat/question interface
+* Answer display
+* Error states
+* Responsive styling
+
+**Integration/Support Developer**
+
+* API contract coordination
+* Frontend/backend integration
+* Documentation
+* End-to-end workflow verification
+* Deployment/setup support
+
+All team members should coordinate around the API contracts before integrating frontend and backend components.
 
 ---
 
 ## Notes
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+* `[P]` tasks can be performed in parallel when their dependencies are satisfied.
+* `[US1]`, `[US2]`, and `[US3]` map tasks directly to the corresponding user stories in `spec.md`.
+* Exact file paths are included for every implementation task.
+* The initial implementation intentionally does **not** introduce a vector database.
+* The six supported formats are **PDF, DOCX, TXT, PNG, JPG, and JPEG**.
+* Image files require OCR before entering the common text-processing pipeline.
+* Gemini is the AI provider for the initial implementation.
+* The frontend uses HTML, CSS, and JavaScript.
+* The backend uses Python and FastAPI.
+* `tasks.md` should be treated as the execution checklist generated from the approved design documents.
