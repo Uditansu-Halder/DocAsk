@@ -98,9 +98,7 @@ def create_chunks(
 
                 chunk_number += 1
 
-                # --------------------------------
-                # Overlap
-                # --------------------------------
+                
 
                 overlap_sentences = []
                 overlap_length = 0
@@ -144,9 +142,7 @@ def create_chunks(
                 sentence_length
             )
 
-    # --------------------------------------------
-    # Final chunk
-    # --------------------------------------------
+    
 
     if current_sentences:
 
