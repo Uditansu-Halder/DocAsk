@@ -188,10 +188,16 @@ def extract_text_from_image(file_path: str) -> list[dict]:
         )
 
     # Change this path if Tesseract is installed elsewhere
-    tesseract_path = (
-        r"C:\Program Files\Tesseract-OCR"
-        r"\tesseract.exe"
-    )
+    if os.name == "nt":  # Windows
+        tesseract_path = (
+            r"C:\Program Files\Tesseract-OCR"
+            r"\tesseract.exe"
+        )
+    else:
+        #Linux(Render)
+        pytesseract.pytesseract.tesseract_cmd = (
+            "/usr/bin/tesseract"
+        )
 
     if os.path.exists(tesseract_path):
 
