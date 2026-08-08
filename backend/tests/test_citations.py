@@ -10,7 +10,7 @@ def test_build_citation_payload_uses_source_metadata():
     chunks = [
         {
             "chunk_id": "chunk_001",
-            "text": "This is a relevant excerpt from the document.",
+            "text": "This is a relevant excerpt from the document.",#ok
             "score": 4,
             "source": {"type": "pdf", "location": "Page 2"},
         }
