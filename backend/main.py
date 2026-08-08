@@ -187,23 +187,24 @@ def extract_text_from_image(file_path: str) -> list[dict]:
             "Image OCR requires Pillow and pytesseract."
         )
 
-    # Change this path if Tesseract is installed elsewhere
     if os.name == "nt":  # Windows
+
         tesseract_path = (
             r"C:\Program Files\Tesseract-OCR"
             r"\tesseract.exe"
         )
-    else:
-        #Linux(Render)
+
+        if os.path.exists(tesseract_path):
+            pytesseract.pytesseract.tesseract_cmd = (
+                tesseract_path
+            )
+
+    else:  # Linux (Render)
+
         pytesseract.pytesseract.tesseract_cmd = (
             "/usr/bin/tesseract"
         )
 
-    if os.path.exists(tesseract_path):
-
-        pytesseract.pytesseract.tesseract_cmd = (
-            tesseract_path
-        )
 
     image = Image.open(file_path)
 
@@ -224,7 +225,7 @@ def extract_text_from_image(file_path: str) -> list[dict]:
     ]
 
 # --------------------------------------------------
-# Image OCR
+# Txt extraction
 # --------------------------------------------------
 
 def extract_text_from_txt(file_path: str) -> list[dict]:
